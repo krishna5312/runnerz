@@ -1,13 +1,50 @@
 package dev.chaitanya.runnerz.run;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/runs")
 public class RunController {
 
-    @GetMapping("/hello")
-    public String hello(){
-        return "Hello Runners!!!!";
+    private RunRepository runRepository;
+
+    public RunController( RunRepository runRepository){
+        this.runRepository = runRepository;
+    }
+
+    @GetMapping
+    public List<Run> getAllRuns(){
+        return runRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    Run getRunById(@PathVariable int id){
+        Optional<Run> run= runRepository.findById(id);
+        if(run.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return run.get();
+    }
+
+    @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
+    void createRun(@RequestBody Run run){
+        runRepository.createRun(run);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void updateRun(@RequestBody Run run, @PathVariable int id){
+        runRepository.updateRun(run,id);
+    }
+
+    @DeleteMapping("/{id}")
+    void deleteRun(@PathVariable int id){
+        runRepository.deleteRun(id);
     }
 }

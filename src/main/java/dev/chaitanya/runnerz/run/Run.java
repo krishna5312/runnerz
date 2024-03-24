@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public record Run (
 
-    int id,
+    Integer id,
     LocalDateTime startedOn,
 
     LocalDateTime endedOn,

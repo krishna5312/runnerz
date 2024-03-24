@@ -15,7 +15,7 @@ import java.time.temporal.ChronoUnit;
 @SpringBootApplication
 public class RunnerzApplication {
 
-	private static Logger log = LoggerFactory.getLogger(RunnerzApplication.class);
+	private static final Logger log = LoggerFactory.getLogger(RunnerzApplication.class);
 
 	public static void main(String[] args) {
 		SpringApplication.run(RunnerzApplication.class, args);
@@ -24,7 +24,7 @@ public class RunnerzApplication {
 	@Bean
 	CommandLineRunner run() {
      return args -> {
-		 Run run = new Run(1, LocalDateTime.now(),LocalDateTime.now().plus(1, ChronoUnit.HOURS),"chaitanya",5, Location.OUTDOOR);
+		 Run run = new Run(1, LocalDateTime.now(), LocalDateTime.now().plusHours(1),"chaitanya",5, Location.OUTDOOR);
 		 log.info("Run Object is"+run);
 	 };
 	}
