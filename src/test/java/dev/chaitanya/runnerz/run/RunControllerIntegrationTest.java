@@ -11,8 +11,7 @@ import org.springframework.web.client.RestClient;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RunControllerIntegrationTest {
@@ -33,6 +32,7 @@ public class RunControllerIntegrationTest {
                 .uri("/api/runs")
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {});
+        assertNotNull(runs);
         assertEquals(10, runs.size());
     }
 
@@ -42,7 +42,7 @@ public class RunControllerIntegrationTest {
                 .uri("/api/runs/1")
                 .retrieve()
                 .body(Run.class);
-
+        assertNotNull(run);
         assertAll(
                 () -> assertEquals(1, run.id()),
                 () -> assertEquals("Noon Run", run.title()),
@@ -62,20 +62,20 @@ public class RunControllerIntegrationTest {
                 .retrieve()
                 .toBodilessEntity();
 
-        assertEquals(201, newRun.getStatusCodeValue());
+        assertEquals(201, newRun.getStatusCode().value());
     }
 
     @Test
     void shouldUpdateExistingRun() {
         Run run = restClient.get().uri("/api/runs/1").retrieve().body(Run.class);
-
+        assertNotNull(run);
         ResponseEntity<Void> updatedRun = restClient.put()
                 .uri("/api/runs/1")
                 .body(run)
                 .retrieve()
                 .toBodilessEntity();
 
-        assertEquals(204, updatedRun.getStatusCodeValue());
+        assertEquals(204, updatedRun.getStatusCode().value());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class RunControllerIntegrationTest {
                 .retrieve()
                 .toBodilessEntity();
 
-        assertEquals(204, run.getStatusCodeValue());
+        assertEquals(204, run.getStatusCode().value());
     }
 
 }

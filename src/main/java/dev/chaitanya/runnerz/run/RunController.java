@@ -40,12 +40,15 @@ public class RunController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void updateRun(@Valid @RequestBody Run run, @PathVariable int id){
-        runRepository.save(run);
+        Optional<Run> value = runRepository.findById(id);
+         value.ifPresent(val->   runRepository.save(run));
+
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteRun(@PathVariable int id){
-        runRepository.delete(runRepository.findById(id).get());
+        Optional<Run> run = runRepository.findById(id);
+        run.ifPresent(value -> runRepository.delete(value));
     }
 }
