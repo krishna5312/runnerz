@@ -2,11 +2,13 @@ package dev.chaitanya.runnerz.run;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 
 import java.time.LocalDateTime;
 
 public record Run (
-
+    @Id
     Integer id,
     LocalDateTime startedOn,
 
@@ -16,7 +18,9 @@ public record Run (
     @Positive
     Integer miles,
     
-    Location location
+    Location location,
+    @Version
+    Integer version
 ){
     public Run{
         if(completedOn.isBefore(startedOn)){

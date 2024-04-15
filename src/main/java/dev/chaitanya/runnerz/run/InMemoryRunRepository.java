@@ -20,8 +20,8 @@ public class InMemoryRunRepository implements RunRepository{
 
     @PostConstruct
     private void init(){
-        runs.add(new Run(1, LocalDateTime.now(), LocalDateTime.now().plusHours(1),"Monday Run",5, Location.OUTDOOR));
-        runs.add(new Run(2, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30),"Wednesday Run",2, Location.OUTDOOR));
+        runs.add(new Run(1, LocalDateTime.now(), LocalDateTime.now().plusHours(1),"Monday Run",5, Location.OUTDOOR,null));
+        runs.add(new Run(2, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30),"Wednesday Run",2, Location.OUTDOOR,null));
     }
 
     @Override
