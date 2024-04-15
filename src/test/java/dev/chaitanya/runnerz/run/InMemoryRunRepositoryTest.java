@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,7 +33,8 @@ class InMemoryRunRepositoryTest {
 
     @Test
     void shouldFindRunWithValidId() {
-        var run = repository.findById(1).get();
+        Optional<Run> optRun= repository.findById(1);
+        var run = optRun.orElse(null);
         assertNotNull(run);
         assertEquals("Monday Run", run.title());
         assertEquals(5, run.miles());
@@ -58,7 +60,9 @@ class InMemoryRunRepositoryTest {
     @Test
     void shouldUpdateRun() {
         repository.updateRun(new Run(1, LocalDateTime.now(), LocalDateTime.now().plusHours(1),"Monday Run",5, Location.INDOOR,null),1);
-        var run = repository.findById(1).get();
+        Optional<Run> optRun= repository.findById(1);
+        var run = optRun.orElse(null);
+        assertNotNull(run);
         assertEquals("Monday Run", run.title());
         assertEquals(5, run.miles());
         assertEquals(Location.INDOOR, run.location());

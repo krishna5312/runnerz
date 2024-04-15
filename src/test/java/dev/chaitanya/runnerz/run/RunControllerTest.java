@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.is;
 @WebMvcTest(RunController.class)
 class RunControllerTest {
 
-    private List<Run> runs = new ArrayList<>();
+    private final List<Run> runs = new ArrayList<>();
 
     @Autowired
     MockMvc mvc;
